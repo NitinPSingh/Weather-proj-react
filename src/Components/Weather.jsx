@@ -56,7 +56,7 @@ export default function Weather() {
         ? (
             <div>
 
-                <a href="https://icons8.com/icon/G2qFum1HEdTS/temperature"></a>
+                
                 <div class="grid-container">
                     <div class="grid-left">
                         <h1
@@ -229,7 +229,7 @@ function Box(props) {
             }}>{props.title}</p>
             <div className="box-in">
                 <div >
-                    <img src={props.img} height="100px" width="100px" id="image"/>
+                    <img src={props.img} alt="lost img" height="100px" width="100px" id="image"/>
 
                 </div>
                 <div>
@@ -251,6 +251,7 @@ function Temperature(props) {
         <div className="temp-box">
             <div className="temp-int">
                 <img
+                alt="lost img"
                     style={{
                     paddingTop: "20%"
                 }}
@@ -265,6 +266,7 @@ function Temperature(props) {
             <div className="temp-int">
 
                 <img
+                alt="lost img"
                     style={{
                     paddingTop: "20%"
                 }}
