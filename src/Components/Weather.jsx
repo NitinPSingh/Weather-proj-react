@@ -21,17 +21,17 @@ export default function Weather() {
         "Friday",
         "Saturday"
     ];
-    const getWeatherData = async() => {
-
-        const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=66131a4acc7d5f029d996178c078add1`)
-
-        setWeatherData({
-            ...data
-        });
-        
-    }
+    
     useEffect(() => {
-        
+        const getWeatherData = async() => {
+
+            const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=66131a4acc7d5f029d996178c078add1`)
+    
+            setWeatherData({
+                ...data
+            });
+            
+        }
         getWeatherData();
         
 
@@ -45,7 +45,7 @@ export default function Weather() {
 
     }
     function system() {
-        systemUsed == "metric"
+        systemUsed === "metric"
             ? setSystemUsed("imperial")
             : setSystemUsed("metric");
         console.log(systemUsed)
@@ -75,10 +75,10 @@ export default function Weather() {
                         <h1
                             style={{
                             margin: "0px"
-                        }}>{systemUsed == "metric"
+                        }}>{systemUsed === "metric"
                                 ? Math.round(weatherData.main.temp)
                                 : Math.round(ctoF(weatherData.main.temp))}
-                            °{systemUsed == "metric"
+                            °{systemUsed === "metric"
                                 ? "C"
                                 : "F"}</h1>
                         feels like :
@@ -87,14 +87,14 @@ export default function Weather() {
                             margin: "0px",
                             display: "inline"
                         }}>
-                            {systemUsed == "metric"
+                            {systemUsed === "metric"
                                 ? Math.round(weatherData.main.feels_like)
                                 : Math.round(ctoF(weatherData.main.feels_like))}
-                            °{systemUsed == "metric"
+                            °{systemUsed === "metric"
                                 ? "C"
                                 : "F"}</h3>
                         <Temperature
-                            systemUsed={systemUsed == "metric"
+                            systemUsed={systemUsed === "metric"
                             ? "metric"
                             : "imperial"}
                             tempmin={weatherData.main.temp_min}
@@ -106,10 +106,10 @@ export default function Weather() {
                         <div class="grid-right-up">
                             <h1 >
                                 {weekday[new Date(convertTime(weatherData.dt, weatherData.timezone).input).getUTCDay()]}
-                                ,{" "} {systemUsed == "metric"
+                                ,{" "} {systemUsed === "metric"
                                     ? parseInt(convertTime(weatherData.dt, weatherData.timezone)[0].split(":")[0])
                                     : timeToAMPM(convertTime(weatherData.dt, weatherData.timezone)[0]).split(":")[0]}
-                                :00{" "} {systemUsed == "imperial"
+                                :00{" "} {systemUsed === "imperial"
                                     ? isPM(convertTime(weatherData.dt, weatherData.timezone)[0])
                                     : ""}
                             </h1>
@@ -149,7 +149,7 @@ export default function Weather() {
                                         title={"Wind Speed"}
                                         img={"/icons/017-wind.png"}
                                         data={getWindSpeed(systemUsed, weatherData.wind.speed)}
-                                        unit={systemUsed == "metric"
+                                        unit={systemUsed === "metric"
                                         ? "m/s"
                                         : "m/h"}/>
                                 </div>
@@ -170,7 +170,7 @@ export default function Weather() {
                                     title={"Visibility"}
                                     img={"/icons/binocular.png"}
                                     data={getVisibility(systemUsed, weatherData.visibility)}
-                                    unit={systemUsed == "metric"
+                                    unit={systemUsed === "metric"
                                     ? "km"
                                     : "miles"}/>
                             </div>
@@ -255,10 +255,10 @@ function Temperature(props) {
                     paddingTop: "20%"
                 }}
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAD/UlEQVRoge2aTUxcVRiGn+/OHWhqoqmAMggmGraaKNoEZ8aoC5uGGUbipgmJdasxjdTGnYo/CyXxpwvqSl11KVCYgZh0QcKPUcGNdWXaaEu5SDURqxFm7pzPBTMJaQcGzpz+JfOuzsw57/udd777nXvm3CvcAASp5EHUvIInXcCDpa8vYnQRT0/FJuZ/cB1TXAsG6eTbqA7uoK2ovhPLzb3vMq7nUmwlncyg+i5QBIZVeWLd9w+s+/4BNfokyimgiMh7K6lE2mVs36WYqg5sNuRYLDfz+TXdC8BCkE78jDKswgAw4Sq204wAjwE0mPzp7QY0/rev3Pe4y8CujdwN0DT13d/bDbj37Nk1AJR7XAZ2beSWoW7kdoPT+0iQSmgN9NlYdjZpS76dMlLLj+D2PlJGLDu7Y6bLmas2bi+4nTJSE25IRnaLa2qqXiNwizNSr5EKuOkZ+eXw4Ua4CtzhNdK5umq26bqzakQWFwtBKgHUa6Qi6jVii3qNVEG9RmxRr5EqcJaRpb6DTRSqj9taI8Vovrl99Ps/XcR3kpHlnuShSKHhXOnjxV1QLgFECg3nltNPPe9iDjUbCdLJl0U0C7QijJiIl6jGMREvLjAKtIp6uaAnfrTWedS0/K2kEylVxgBPVY+35eY+2wt/OZ0cENWPgSJoJpadm7Sdi7WRK4eSsTDKT6BNAq+3ZmdP2uiUzHwC/BEx/iP3TU6v2OhYX1phVD8AbQL92tYEQNvEzKely6w59ArWjxqsjFzOPN0BvASsq9E3bIOXob5/HNgQkaNXeuNtNhpWRryiHgF8VUbbJud/s9HYitjY9K8gYyjRgpEjVnOyC63PAojIiB2/AsSMbGrynA3dyojAowD4kQUbfsWJGNnU0pL2Xvk2JIUmgPW/sFphKiG/vxiUmi02fNtVqwBwV4u7Lc7+f0y01Mzb8G2NBAD5f0OrFaYSNnyvrHXZhm9r5DyAH6HLkn891NvUEi7Y0G2N5ABUJWPJvw4iJS0jORu+lZFi0T8DhKB9v/ckHrbR2IrV3u5OlAwQhhKO22hYGWmfml4S+ApoMKJDNhpbYUxkCGgQ5YuO7Lc3tUaIeDoIXAV5MehJWG9TgnT8hEIfwpqn/qCtjrWRlvG5ZYF+wCB8ZGMmSMdPoPIhYDDSb7vzBQcPQ4NU/DWQk4CHMOKF5s37p+bP78RZ7e3uNCYypNAHGOBYLDs7XMs8nJwrlf5gnWbzzYc8whmBMUPxR39f4xJAuL7RjnpdgryAkEGJIqxhpD+Wm7FaqbbC2QHZcvqZZjR8S+BVqh9qhCJ8GcnLYMs3M0GVsbuC8/e1LqW6H/DV70VIgT4EdJS7EC5gJBdKOG67Om2H/wEFuXn4J3TGHAAAAABJRU5ErkJggg=="/>
-                <h2>{props.systemUsed == "metric"
+                <h2>{props.systemUsed === "metric"
                         ? Math.round(props.tempmax)
                         : Math.round(ctoF(props.tempmax))}
-                    °{props.systemUsed == "metric"
+                    °{props.systemUsed === "metric"
                         ? "C"
                         : "F"}</h2>
             </div>
@@ -269,10 +269,10 @@ function Temperature(props) {
                     paddingTop: "20%"
                 }}
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAD/ElEQVRoge2aTWwbVRSFvztjuwEhqioB2nECAmVLJWhhAyzSOAWhQojYVAoiVHWIQKgipWIHhJ8FVOKnSClqOwnqokvStJAKiK1s2DVlQ1k2ok0cR+JHBNQAsWcui9hSVDlxcj1tU8ln42e/d85913fOnfGMheuA5qz/aKi8AroD5N6lT/UKyIWQ8Ohc6uXzUceUqAW9jP82MLCKtgr6Ti7V+36UcZ0oxbzxE53Au0AAMqiO7ky47paE627RUB4BjgKBIu95Wf+ZKGPHohQTh35VENUDuY70F9dMTwKTXsb/GRhE6Qe+jip2pBVRlYcA/incdmqlNQ0alOcejjJ2pIkAdwL88fQLf620YKqjb7403Bxl4KgTuWmoJ7LREOl5xMv4WgP9h9lU+gkreSNVpJYvIdrzSBmzqfSqlS5Xrtq69WAjVaQmXJeKrBXXeKruEbjJFal7pAJueEVaz32+aaE0vqU9svnuTeEKU7eWRy7s7Ct4GR+oe6Qi6h6xou6RKqh7xIq6R6ogsookMycblULVdcs9IsSbcqme36OIH0lFto0ff1IpXCy9vbIGyjSAUrjoZYd2R7GHmhNJZodeEnG+AbaKMELgPF6VFDiPgZ4GtqI6lsz4PbXuo6b2l8wc36M4o4CjIgfz7fs/Wxd/3O9X4WMgcBztnNnVe866F3Mi9317bFsh5v4ENCq8nk+lj1h0Ssl8AvxWcN0Hf23bN2fRMR9ahZj7AdAo8JU1CYBcR/rT0mHWFA8C86MGUyLed8MtwIvAv6HwhjV4GaEbOwj8B/S0fD/kWTRsFXF0LxBD5XS+PX3ZpLEMc237fgFGgXjosNe0JQtJRNuWXsMRC7+ipsoIgKK7LHxTIopuBwjc2KSFXwlFkbLWdgvfaHZpBGgAU4ephPjtd+RLw7ssfGvXKgBcZSGyS5yFPxfjpeGihW9NJA+QCOKmDlMJDe7VslbOwreZHS4BqMgOC78S1I2VtaYsfKvZx5YG0mnhV4KgnQCiJe11wlYRlzNAEei6JzP8gEVjOZon/FagEyiKkzhr0TAlkmvrnUH4EkjECA9bNJYjDPQwkFAYmmnvuXEeAXADGQD+Vng+mTlhvkzxsv4hkC5gvui6A1YdcyLTu/fPInQDoSIfWZLxsv4hlA+BUJRu65UvRPAw1Mv6r6EcARwRRhyCN6fb+y6txmme8FuXDifpAkLQA7Op3sFa9hHJfaXSD6xTLP3zYRE4gzJKGPxYSBRnAOKLseZSi32u1KHiwLwo3bmOtKlTLUdkN8i8iWNNBLG3QF+l+k2NoiDDsWJx4PJTffkqa9eEyP+v1Zw9mdRw8dkQ2SPC/UBLaWoamBLVMXESZ63daSX8D3x6ZiNl+NitAAAAAElFTkSuQmCC"/>
-                <h2>{props.systemUsed == "metric"
+                <h2>{props.systemUsed === "metric"
                         ? Math.round(props.tempmin)
                         : Math.round(ctoF(props.tempmin))}
-                    °{props.systemUsed == "metric"
+                    °{props.systemUsed === "metric"
                         ? "C"
                         : "F"}</h2>
 

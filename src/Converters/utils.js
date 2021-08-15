@@ -10,19 +10,21 @@ export const isPM = (time) => {
 };
 
 export const getWindSpeed = (systemUsed, windInMph) =>
-  systemUsed == "metric" ? windInMph : mpsToMph(windInMph);
+  systemUsed === "metric" ? windInMph : mpsToMph(windInMph);
 
 export const getVisibility = (systemUsed, visibilityInKm) =>
-  systemUsed == "metric"
+  systemUsed === "metric"
     ? (visibilityInKm / 1000).toPrecision(2)
     : kmToM(visibilityInKm / 1000);
 
+
+
 export const getTime = (systemUsed, currentTime, timezone) =>
-  systemUsed == "metric"
+  systemUsed === "metric"
     ? `${parseInt(convertTime(currentTime, timezone)[0].split(":")[0])}:${
         convertTime(currentTime, timezone)[0].split(":")[1]
       }`
     : timeToAMPM(convertTime(currentTime, timezone)[0]);
 
 export const getAMPM = (systemUsed, currentTime, timezone) =>
-  systemUsed == "imperial" ? isPM(convertTime(currentTime, timezone)[0]) : "";
+  systemUsed === "imperial" ? isPM(convertTime(currentTime, timezone)[0]) : "";
